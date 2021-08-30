@@ -20,37 +20,37 @@ func RandStr(base string, length int64) string {
 
 // RandDigital Generate Random Digital
 func RandDigital(length int64) string {
-	return RandStr("0123456789", length)
+	return RandStr(BaseDigital, length)
 }
 
 // RandHex Generate Random Hex String
 func RandHex(length int64) string {
-	return RandStr("0123456789abcdef", length)
+	return RandStr(BaseHex, length)
 }
 
 // RandDigitalAndAlphabet Generate Random String with digital and alphabet
 func RandDigitalAndAlphabet(length int64) string {
-	return RandStr("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", length)
+	return RandStr(BaseNormal, length)
 }
 
 // GenPass Generate Password
 func GenPass(digital bool, lowerCase bool, upperCase bool, fuzzy bool, length int64) string {
 	base := ""
 	if digital {
-		base += "0123456789"
+		base += BaseDigital
 	}
 	if lowerCase {
-		base += "abcdefghijklmnopqrstuvwxyz"
+		base += BaseLowerCaseAlphabet
 	}
 	if upperCase {
-		base += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		base += BaseUpperCaseAlphabet
 	}
 	if base == "" {
-		base = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*<>-_+=|"
+		base = BaseNormal
 	}
 
 	if args.Exists("--without-fuzzy") {
-		base = RemoveFuzzy(base)
+		base = BaseWithoutFuzzy
 	}
 
 	return RandStr(base, length)

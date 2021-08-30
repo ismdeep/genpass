@@ -14,7 +14,7 @@ func TestGenPass(t *testing.T) {
 		{
 			name: "TestGenPass-001",
 			args: args{
-				base:   "0123456789abcdef",
+				base:   BaseHex,
 				length: 10,
 			},
 		},

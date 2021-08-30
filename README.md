@@ -2,5 +2,5 @@
 
 
 ```bash
-go get -u github.com/ismdeep/genpass
+go install github.com/ismdeep/genpass@latest
 ```

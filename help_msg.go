@@ -9,5 +9,7 @@ func HelpMsg() string {
     -a                     Generate with lower case alphabet
     -A                     Generate with UPPER case alphabet
     --hex                  Generate password which is hex
+    --jwt                  Generate jwt key
+    --gauth                Generate Google Authenticator key
 `
 }
