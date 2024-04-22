@@ -2,40 +2,95 @@ package main
 
 import (
 	"fmt"
-	"github.com/ismdeep/args"
-	"strconv"
+
+	"github.com/google/uuid"
+	"github.com/spf13/cobra"
 )
 
+func JWTCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "jwt",
+		Short: "Generate JWT Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandStr(BaseWithoutFuzzy, 32))
+		},
+	}
+}
+
+func GAuthCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "gauth",
+		Short: "Generate GAuth Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", 32))
+		},
+	}
+}
+
+func HexCommand() *cobra.Command {
+	var n int64
+	m := &cobra.Command{
+		Use:   "hex",
+		Short: "Generate Hex Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandHex(n))
+		},
+	}
+
+	m.PersistentFlags().Int64VarP(&n, "length", "n", 32, "Length of secret key")
+
+	return m
+}
+
+func UUIDCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "uuid",
+		Short: "Generate UUID Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(uuid.NewString())
+		},
+	}
+}
+
+func IDCommand() *cobra.Command {
+	var youtubeStyle bool
+	var uuidStyle bool
+	m := &cobra.Command{
+		Use:   "id",
+		Short: "Generate Unique ID",
+		Run: func(cmd *cobra.Command, args []string) {
+			switch {
+			case youtubeStyle:
+				fmt.Println(RandStr(BaseYoutubeUniqueIDAlphabet, 11))
+			case uuidStyle:
+				fmt.Println(uuid.NewString())
+			}
+		},
+	}
+
+	m.PersistentFlags().BoolVar(&youtubeStyle, "youtube", false, "Use youtube style id")
+	m.PersistentFlags().BoolVar(&uuidStyle, "uuid", false, "Use uuid style id")
+
+	return m
+}
+
+func MainCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:           "genpass",
+		Short:         "Generate password",
+		SilenceErrors: true,
+		SilenceUsage:  true,
+	}
+}
+
 func main() {
-	if args.Exists("--help") {
-		fmt.Println(HelpMsg())
-		return
+	mainCmd := MainCommand()
+	mainCmd.AddCommand(JWTCommand())
+	mainCmd.AddCommand(GAuthCommand())
+	mainCmd.AddCommand(HexCommand())
+	mainCmd.AddCommand(UUIDCommand())
+	mainCmd.AddCommand(IDCommand())
+	if err := mainCmd.Execute(); err != nil {
+		panic(err)
 	}
-
-	var err error
-	n := int64(16)
-	if args.Exists("-n") {
-		n, err = strconv.ParseInt(args.GetValue("-n"), 10, 64)
-		if err != nil {
-			n = int64(16)
-		}
-	}
-
-	if args.Exists("--hex") {
-		fmt.Println(RandHex(n))
-		return
-	}
-
-	if args.Exists("--jwt") {
-		fmt.Println(RandStr(BaseWithoutFuzzy, 32))
-		return
-	}
-
-	if args.Exists("--gauth") {
-		fmt.Println(RandStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", 32))
-		return
-	}
-
-	fmt.Println(GenPass(args.Exists("-d"), args.Exists("-a"), args.Exists("-A"), args.Exists("--without-fuzzy"), n))
-	return
 }
