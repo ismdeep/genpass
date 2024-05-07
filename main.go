@@ -74,6 +74,18 @@ func IDCommand() *cobra.Command {
 	return m
 }
 
+func CodeCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "code",
+		Short: "Generate Random Code",
+		Run: func(cmd *cobra.Command, args []string) {
+			alphabet := "ABCDEFGHJKLMNPQRSTUVWXYZ"
+			number := "23456789"
+			fmt.Println(RandStr(alphabet, 1) + RandStr(number, 2) + RandStr(alphabet, 1))
+		},
+	}
+}
+
 func MainCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:           "genpass",
@@ -90,6 +102,7 @@ func main() {
 	mainCmd.AddCommand(HexCommand())
 	mainCmd.AddCommand(UUIDCommand())
 	mainCmd.AddCommand(IDCommand())
+	mainCmd.AddCommand(CodeCommand())
 	if err := mainCmd.Execute(); err != nil {
 		panic(err)
 	}
