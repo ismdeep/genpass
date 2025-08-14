@@ -165,6 +165,16 @@ func PinCommand() *cobra.Command {
 	}
 }
 
+func SerialNumberCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "sn",
+		Short: "Generate SerialNumber Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandStr("0123456789ABCDEFGHJKLMNPQRSTUVWXYZ", 10))
+		},
+	}
+}
+
 func MainCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:           "genpass",
@@ -184,6 +194,7 @@ func main() {
 	mainCmd.AddCommand(CodeCommand())
 	mainCmd.AddCommand(HTPasswordCommand())
 	mainCmd.AddCommand(PinCommand())
+	mainCmd.AddCommand(SerialNumberCommand())
 	if err := mainCmd.Execute(); err != nil {
 		panic(err)
 	}
