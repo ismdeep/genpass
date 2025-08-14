@@ -155,6 +155,16 @@ func HTPasswordCommand() *cobra.Command {
 	return m
 }
 
+func PinCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "pin",
+		Short: "Generate Pin Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandStr("0123456789", 6))
+		},
+	}
+}
+
 func MainCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:           "genpass",
@@ -173,6 +183,7 @@ func main() {
 	mainCmd.AddCommand(IDCommand())
 	mainCmd.AddCommand(CodeCommand())
 	mainCmd.AddCommand(HTPasswordCommand())
+	mainCmd.AddCommand(PinCommand())
 	if err := mainCmd.Execute(); err != nil {
 		panic(err)
 	}
