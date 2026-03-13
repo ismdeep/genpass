@@ -165,6 +165,16 @@ func PinCommand() *cobra.Command {
 	}
 }
 
+func MySQLCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "mysql",
+		Short: "Generate MySQL Secret Key",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(RandStr("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 11))
+		},
+	}
+}
+
 func SerialNumberCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "sn",
@@ -195,7 +205,9 @@ func main() {
 	mainCmd.AddCommand(HTPasswordCommand())
 	mainCmd.AddCommand(PinCommand())
 	mainCmd.AddCommand(SerialNumberCommand())
+	mainCmd.AddCommand(MySQLCommand())
 	if err := mainCmd.Execute(); err != nil {
-		panic(err)
+		_, _ = fmt.Fprintf(os.Stderr, "[ERROR] %v\n", err.Error())
+		os.Exit(1)
 	}
 }
