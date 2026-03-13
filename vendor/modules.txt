@@ -1,0 +1,22 @@
+# github.com/google/uuid v1.6.0
+## explicit
+github.com/google/uuid
+# github.com/inconshreveable/mousetrap v1.1.0
+## explicit; go 1.18
+github.com/inconshreveable/mousetrap
+# github.com/ismdeep/args v0.0.2
+## explicit; go 1.15
+github.com/ismdeep/args
+# github.com/johnaoss/htpasswd v0.0.0-20190120213328-a0cc59f788da
+## explicit
+github.com/johnaoss/htpasswd/apr1
+# github.com/spf13/cobra v1.10.2
+## explicit; go 1.15
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.10
+## explicit; go 1.12
+github.com/spf13/pflag
+# golang.org/x/crypto v0.49.0
+## explicit; go 1.25.0
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
