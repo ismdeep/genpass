@@ -11,10 +11,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func init() {
-
-}
-
 func JWTCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "jwt",
